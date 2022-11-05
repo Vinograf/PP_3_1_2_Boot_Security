@@ -1,0 +1,160 @@
+<!--<!DOCTYPE html>-->
+<!--<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>Users</title>-->
+<!--    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css">-->
+<!--</head>-->
+
+<!--<nav class="navbar navbar-expand-md bg-dark navbar-dark">-->
+<!--    &lt;!&ndash; Brand &ndash;&gt;-->
+<!--    <a class="navbar-brand" href="#">User create</a>-->
+
+<!--    &lt;!&ndash; Toggler/collapsibe Button &ndash;&gt;-->
+<!--    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">-->
+<!--        <span class="navbar-toggler-icon"></span>-->
+<!--    </button>-->
+
+<!--    &lt;!&ndash; Navbar links &ndash;&gt;-->
+<!--    <div class="collapse navbar-collapse" id="collapsibleNavbar">-->
+<!--        <ul class="navbar-nav">-->
+<!--            <li class="nav-item">-->
+<!--                <a class="nav-link" th:href="@{/}">User Management</a>-->
+<!--            </li>-->
+<!--        </ul>-->
+<!--    </div>-->
+<!--</nav>-->
+<!--<br>-->
+<!--<br>-->
+<!--<div class="container">-->
+<!--    <div class="row">-->
+<!--        <div class="col-lg-6 col-md-6 col-sm-6 container justify-content-center card">-->
+<!--            <h1 class="text-center"> Create New User </h1>-->
+<!--            <div class="card-body">-->
+<!--                <form th:action="@{add}"-->
+<!--                      th:object="${user}"-->
+<!--                      method="post">-->
+<!--                    <fieldset>-->
+<!--                        <legend>Данные пользователя</legend>-->
+<!--                        <p>-->
+<!--                            <label th:for="username">Логин-->
+<!--                                <input type="text"-->
+<!--                                       name="username"-->
+<!--                                       th:id="username">-->
+<!--                            </label>-->
+<!--                            <br/>-->
+<!--                            <label th:for="password">Пароль-->
+<!--                                <input type="text"-->
+<!--                                       name="password"-->
+<!--                                       th:id="password">-->
+<!--                            </label>-->
+<!--                            <br/>-->
+<!--                            <br>-->
+<!--                            <label>-->
+<!--                                <input type="checkbox"-->
+<!--                                       name="roleAdmin"-->
+<!--                                       th:value="ROLE_ADMIN"-->
+<!--                                       th:text="Администратор">-->
+<!--                            </label>-->
+
+
+<!--                        </p>-->
+<!--                    </fieldset>-->
+<!--                    <button type="submit">Сохранить пользователя</button>-->
+<!--                </form>-->
+<!--                <br/>-->
+<!--                <form th:action="@{/admin/allUsers}">-->
+<!--                    <button type="submit">Назад к списку пользователей</button>-->
+<!--                </form>-->
+<!--                <br/>-->
+<!--                <button class="buttonLogout" onclick="window.location.href = '/logout';">Выйти</button>-->
+<!--            </div>-->
+<!--            </form>-->
+
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+<!--</div>-->
+<!--</html>-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add user</title>
+<!--    <style>-->
+<!--        td {-->
+<!--            font-family: Arial, sans-serif;-->
+<!--            font-size: 14px;-->
+<!--            padding: 10px 5px;-->
+<!--            border-style: solid;-->
+<!--            border-width: 1px;-->
+<!--            overflow: hidden;-->
+<!--            word-break: normal;-->
+<!--            border-color: #ccc;-->
+<!--            color: #333;-->
+<!--            background-color: rgba(255, 255, 240);-->
+<!--        }-->
+
+<!--        .buttonAdd {-->
+<!--            border-width: 1px;-->
+<!--            background: rgba(152, 251, 152);-->
+<!--            position: relative;-->
+<!--            left: 50%;-->
+<!--            transform: translate(-50%, 0);-->
+<!--        }-->
+
+<!--        .buttonLogout {-->
+<!--            border-width: 1px;-->
+<!--            padding: 5px;-->
+<!--            background-color: rgba(220, 220, 220);-->
+<!--        }-->
+
+<!--        div {-->
+<!--            font-family: Arial, sans-serif;-->
+<!--            font-size: 14px;-->
+<!--            color: rgba(255, 99, 71);-->
+<!--        }-->
+<!--    </style>-->
+</head>
+<body>
+<h1>Добавить пользователя</h1>
+<form th:action="@{add}"
+      th:object="${user}"
+      method="post">
+    <fieldset>
+        <legend>Данные пользователя</legend>
+        <p>
+            <label th:for="username">Логин
+                <input type="text"
+                       name="username"
+                       th:id="username">
+            </label>
+            <br/>
+            <label th:for="password">Пароль
+                <input type="text"
+                       name="password"
+                       th:id="password">
+            </label>
+            <br/>
+            <br>
+            <label>
+                <input type="checkbox"
+                       name="roleAdmin"
+                       th:value="ROLE_ADMIN"
+                       th:text="Администратор">
+            </label>
+
+
+        </p>
+    </fieldset>
+    <button type="submit">Сохранить пользователя</button>
+</form>
+<br/>
+<form th:action="@{/admin/allUsers}">
+    <button type="submit">Назад к списку пользователей</button>
+</form>
+<br/>
+<button class="buttonLogout" onclick="window.location.href = '/logout';">Выйти</button>
+</body>
+</html>
