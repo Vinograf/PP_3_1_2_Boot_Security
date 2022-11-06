@@ -1,0 +1,104 @@
+<!--<!DOCTYPE html>-->
+<!--<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">-->
+<!--<html lang="en">-->
+<!--<head>-->
+<!--    <meta charset="UTF-8">-->
+<!--    <title>Users</title>-->
+<!--    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css">-->
+<!--</head>-->
+<!--<body>-->
+<!--<table class="table">-->
+<!--    <thead>-->
+<!--    <tr>-->
+<!--        <th scope="col">id</th>-->
+<!--        <th scope="col">name</th>-->
+<!--        <th scope="col">pass</th>-->
+<!--        <th scope="col">action</th>-->
+<!--    </tr>-->
+<!--    </thead>-->
+<!--    <tbody>-->
+<!--    <tr th:each="user : ${users}">-->
+<!--&lt;!&ndash;        <td><a th:href="@{'/' + ${user.id}}" th:utext="${user.id}">UserId</a></td>&ndash;&gt;-->
+<!--        <td th:utext="${user.getId}"/>-->
+<!--        <td th:utext="${user.getUsername}"/>-->
+<!--        <td th:utext="${user.getPassword}"/>-->
+<!--        </td>-->
+<!--        <td>-->
+<!--            <a th:action="@{/admin/edit/{id}(id=${user.getId()})}" th:object="${user}"-->
+<!--               class="btn btn-primary">Update</a>-->
+
+<!--            <a th:method="DELETE" th:action="@{/admin/{id}(id=${user.getId()})}" th:object="${user}"-->
+<!--               class="btn btn-danger">Delete</a>-->
+
+<!--        </td>-->
+<!--        </td>-->
+<!--    </tr>-->
+<!--    </tbody>-->
+<!--</table>-->
+<!--&lt;!&ndash;<form th:action="@{/add}" th:object="${useruser}" method="post">&ndash;&gt;-->
+
+<!--&lt;!&ndash;    <button type="submit">add user</button>&ndash;&gt;-->
+<!--&lt;!&ndash;</form>&ndash;&gt;-->
+<!--</div>-->
+
+<!--<div class = "row">-->
+<!--    <div class = "col-lg-3">-->
+<!--        <a th:href = "@{/admin/add}" class = "btn btn-primary btn-sm mb-3"> Add new user</a>-->
+<!--    </div>-->
+<!--</div>-->
+<!--</form:form>-->
+<!--<button><a href="/">Главная</a></button>-->
+<!--<br/>-->
+<!--<button class="buttonLogout" onclick="window.location.href = '/logout';">Выйти</button>-->
+<!--</body>-->
+<!--</body>-->
+<!--</html>-->
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <title>Table</title>
+
+</head>
+<body>
+<br>
+<h1>Таблица пользователей</h1>
+<table border="1">
+    <tr>
+        <th>№</th>
+        <th>Логин</th>
+        <th>Пароль</th>
+        <th>Обновление</th>
+        <th>Удаление</th>
+
+    </tr>
+    <tbody>
+    <tr th:each="user : ${user}">
+
+        <td th:utext="${user.getId()}"></td>
+        <td th:utext="${user.getUsername()}"></td>
+        <td th:utext="${user.getPassword()}"></td>
+        <td>
+            <form  th:action="@{/admin/edit/{id}(id=${user.getId()})}" th:object="${user}">
+                <button type="submit">Обновить</button>
+            </form>
+        </td>
+        <td>
+            <form  th:method="DELETE" th:action="@{/admin/{id}(id=${user.getId()})}" th:object="${user}">
+                <button type="submit">Удалить</button>
+            </form>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<br>
+<button><a href="/admin/add">Создать нового пользователя!</a></button>
+<br>
+</form:form>
+<button><a href="/">Главная</a></button>
+<br/>
+<button class="buttonLogout" onclick="window.location.href = '/logout';">Выйти</button>
+</body>
+</html>

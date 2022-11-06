@@ -1,0 +1,48 @@
+
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <title>Edit user</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css">
+
+</head>
+<body>
+<h1>Редактировать пользователя</h1>
+<form th:method="POST" th:action="@{/admin/edit/{id}(id=${user.getId()})}" th:object="${user}">
+  <table>
+    <tr>
+      <td>
+        <label for="id">ID пользователя </label>
+        <input readonly type="number" th:field="*{id}" id="id" placeholder="id"/>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <label for="username">Введите имя</label>
+        <input type="text" th:field="*{username}" id="username"/>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <label for="password">Введите пароль</label>
+        <input type="password" th:field="*{password}" id="password"/>
+      </td>
+    </tr>
+    <br>
+    <br>
+    <tr>
+      <td>
+        <input class ="buttonEdit" type="submit" value="Сохранить изменения"/>
+      </td>
+    </tr>
+  </table>
+</form>
+<br>
+</form:form>
+<a href="/">Главная</a>
+<br/>
+<button class="buttonLogout" onclick="window.location.href = '/logout';">Выйти</button>
+</body>
+</html>
