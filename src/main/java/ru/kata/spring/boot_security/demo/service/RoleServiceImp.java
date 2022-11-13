@@ -1,36 +1,39 @@
 package ru.kata.spring.boot_security.demo.service;
 
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import ru.kata.spring.boot_security.demo.DAO.RoleDao;
 import ru.kata.spring.boot_security.demo.model.Role;
+import ru.kata.spring.boot_security.demo.repository.RoleRepository;
 
+import javax.annotation.PostConstruct;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 @Service
-@Transactional
+
 public class RoleServiceImp implements RoleService{
-    private RoleDao roleDao;
+    private final RoleRepository roleRepository;
 
-    public RoleServiceImp(RoleDao roleDao) {
-        this.roleDao = roleDao;
+    @Autowired
+    public RoleServiceImp(RoleRepository roleRepository) {
+        this.roleRepository = roleRepository;
     }
+
     @Override
-    public void addRole(Role role) {
-        roleDao.addRole(role);
+    public List<Role> findAllRole() {
+        return roleRepository.findAll();
     }
 
-    public List<Role> getAllRoles() {
-        return roleDao.getAllRoles();
-    }
-
-    @Transactional(readOnly=true)
     @Override
-    public Role getRoleById(Long id) {
-        return roleDao.getRoleById(id);
-    }
-    @Override
-    public Role getRoleByName(String name) {
-        return roleDao.getRoleByName(name);
+    public Set<Role> findByIdRoles(List<Long> roles) {
+        return new HashSet<>(roleRepository.findAllById(roles));
     }
 
+    @Override
+    @PostConstruct
+    public void addDefaultRole() {
+        roleRepository.save(new Role(1L,"ROLE_USER"));
+        roleRepository.save(new Role(2L,"ROLE_ADMIN"));
+    }
 }

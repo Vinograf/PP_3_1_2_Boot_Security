@@ -4,19 +4,14 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
   <title>Пользователь</title>
 </head>
+</head>
 <body>
-<table border="1">
+<table>
   <tr>
-    <th>№</th>
-    <th>Логин</th>
-
+  <td th:utext="${user.id}">Id</td>
   </tr>
-  <tbody>
-  <tr th:each="user : ${user}">
-    <td th:utext="${user.getId()}"></td>
-    <td th:utext="${user.getUsername()}"></td>
+  <td th:utext="${user.username}">логин</td>
   </tr>
-  </tbody>
 </table>
 </form:form>
 <button><a href="/">Главная</a></button>

@@ -3,10 +3,9 @@ package ru.kata.spring.boot_security.demo.model;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
 import javax.persistence.*;
+import javax.validation.constraints.*;
 import java.util.Collection;
-import java.util.Objects;
 import java.util.Set;
 
 @Entity
@@ -15,9 +14,14 @@ public class User implements UserDetails{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    @NotEmpty(message = "Username cannot be empty")
+    @Size(min = 2, max = 15, message = "Name should be between 2 and 15 latin characters")
+    @Column(unique = true)
     private String username;
+    @NotEmpty(message = "Password cannot be empty")
+    @Size(min = 4, message = "Password should be greater then 4 symbols")
     private String password;
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "users_roles",
             joinColumns = @JoinColumn(name = "user_id"),
@@ -95,17 +99,6 @@ public class User implements UserDetails{
         this.roles = roles;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        User user = (User) o;
-        return Objects.equals(username, user.username) ;
-    }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(username);
-    }
 
 }

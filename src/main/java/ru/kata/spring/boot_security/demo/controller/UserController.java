@@ -2,15 +2,15 @@ package ru.kata.spring.boot_security.demo.controller;
 
 
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import ru.kata.spring.boot_security.demo.service.UserService;
 
 import java.security.Principal;
 
 @Controller
-@RequestMapping("/user")
 public class UserController {
     private UserService userService;
 
@@ -18,9 +18,20 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping(value = "/oneUser")
-    public String getUserPage(ModelMap modelMap, Principal principal) {
-        modelMap.addAttribute("user", userService.loadUserByUsername(principal.getName()));
+    @GetMapping(value = "/user")
+    public String getUserPage(Model model, Principal principal) {
+        model.addAttribute("user",userService.findByUsername(principal.getName()));
         return "oneUser";
     }
+
+    @RequestMapping(value={"/login"}, method = RequestMethod.GET)
+    public String loginPage() {
+        return "login";
+    }
+
+    @GetMapping(value={"/"})
+    public String indexPage() {
+        return "login";
+    }
+
 }
