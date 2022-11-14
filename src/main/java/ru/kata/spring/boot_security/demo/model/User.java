@@ -12,7 +12,7 @@ import java.util.Set;
 @Table(name = "users")
 public class User implements UserDetails{
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @NotEmpty(message = "Username cannot be empty")
     @Size(min = 2, max = 15, message = "Name should be between 2 and 15 latin characters")

@@ -10,7 +10,7 @@
 </head>
 <body>
 <h1>Edit user</h1>
-<form action="#" th:method="PUT" th:action="@{/admin/edit/}" th:object="${user}">
+<form action="#" th:method="PATCH" th:action="@{/admin/edit/}" th:object="${user}">
   <table>
     <tr>
       <td>
@@ -22,25 +22,26 @@
       <td>
         <label for="username">Enter login</label>
         <input type="text" th:field="*{username}" id="username"/>
-        <div th:if="${#fields.hasErrors('username')}" th:errors="*{username}">username error</div>
+<!--        <div th:if="${#fields.hasErrors('username')}" th:errors="*{username}">username error</div>-->
       </td>
     </tr>
     <tr>
       <td>
         <label for="password">Enter password</label>
         <input type="password" th:field="*{password}" id="password"/>
-        <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}">password error</div>
+<!--        <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}">password error</div>-->
       </td>
     </tr>
 
     <br>
     <tr>
       <td>
-        <label>Roles:
-          <select size="2" multiple name="role" required="required">
-            <option selected="selected" value="1">USER</option>
-            <option value="2">ADMIN</option>
-          </select>
+        <label for="role">Roles:</label>
+        <select size="2" multiple="multiple" th:field="*{roles}"
+                type="text" id="role">
+          <option th:each="role : ${listRoles}" th:value="${role.getId()}" th:text="${role.getName()}"></option>
+
+        </select>
         </label>
       </td>
     </tr>

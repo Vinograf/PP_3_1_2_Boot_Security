@@ -68,16 +68,9 @@ public class AdminController {
         return "edit";
     }
 
-    @PutMapping("admin/edit")
-    public String pageEdit(@RequestParam("role")ArrayList<Long> roles,
-                           @Valid User user,
-                           BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            return "edit";
-        } else {
-            user.setRoles(roleService.findByIdRoles(roles));
-            userService.save(user);
-            return "redirect:/admin";
-        }
+    @PatchMapping("admin/edit")
+    public String pageEdit(@ModelAttribute("user") User user) {
+        userService.save(user);
+        return "redirect:/admin";
     }
 }

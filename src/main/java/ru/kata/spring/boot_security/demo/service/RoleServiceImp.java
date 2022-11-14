@@ -3,6 +3,7 @@ package ru.kata.spring.boot_security.demo.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import ru.kata.spring.boot_security.demo.model.Role;
 import ru.kata.spring.boot_security.demo.repository.RoleRepository;
 
@@ -19,17 +20,17 @@ public class RoleServiceImp implements RoleService{
     public RoleServiceImp(RoleRepository roleRepository) {
         this.roleRepository = roleRepository;
     }
-
+    @Transactional
     @Override
     public List<Role> findAllRole() {
         return roleRepository.findAll();
     }
-
+    @Transactional
     @Override
     public Set<Role> findByIdRoles(List<Long> roles) {
         return new HashSet<>(roleRepository.findAllById(roles));
     }
-
+    @Transactional
     @Override
     @PostConstruct
     public void addDefaultRole() {
