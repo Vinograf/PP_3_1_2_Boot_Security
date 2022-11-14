@@ -10,7 +10,7 @@ public interface UserService {
 
     List<User> findAll ();
     User getById(long id);
-    void save(User user);
+    boolean save(User user);
     void deleteById(long id);
     User findByUsername(String username);
     void addDefaultUser();

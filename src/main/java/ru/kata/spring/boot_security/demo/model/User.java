@@ -3,8 +3,8 @@ package ru.kata.spring.boot_security.demo.model;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
 import javax.persistence.*;
-import javax.validation.constraints.*;
 import java.util.Collection;
 import java.util.Set;
 
@@ -14,12 +14,10 @@ public class User implements UserDetails{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotEmpty(message = "Username cannot be empty")
-    @Size(min = 2, max = 15, message = "Name should be between 2 and 15 latin characters")
+
     @Column(unique = true)
     private String username;
-    @NotEmpty(message = "Password cannot be empty")
-    @Size(min = 4, message = "Password should be greater then 4 symbols")
+
     private String password;
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
