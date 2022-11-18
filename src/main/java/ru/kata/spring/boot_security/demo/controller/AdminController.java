@@ -1,76 +1,63 @@
 package ru.kata.spring.boot_security.demo.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.FieldError;
+
 import org.springframework.web.bind.annotation.*;
 import ru.kata.spring.boot_security.demo.model.User;
-import ru.kata.spring.boot_security.demo.service.RoleService;
-import ru.kata.spring.boot_security.demo.service.UserService;
 
-import javax.validation.Valid;
-import java.util.ArrayList;
+import ru.kata.spring.boot_security.demo.service.RoleServiceImp;
+
+import ru.kata.spring.boot_security.demo.service.UserServiceImp;
+
+
+import java.security.Principal;
 
 @Controller
-@RequestMapping()
+@RequestMapping("/admin")
 public class AdminController {
 
-    private final UserService userService;
-    private final RoleService roleService;
+    private final UserServiceImp userServiceImp;
 
-    @Autowired
-    public AdminController(RoleService roleService, UserService userService) {
+    private final RoleServiceImp roleService;
+
+    public AdminController(UserServiceImp userServiceImpl, RoleServiceImp roleService) {
+        this.userServiceImp = userServiceImpl;
         this.roleService = roleService;
-        this.userService = userService;
     }
 
-    @GetMapping("admin")
-    public String pageForAdmin(Model model) {
-        model.addAttribute("users", userService.findAll());
-        return "allUsers";
+    @GetMapping()
+    public String getUser(Principal principal, Model model) {
+        model.addAttribute("users", userServiceImp.findAll());
+        model.addAttribute("logUser", userServiceImp.findByEmail(principal.getName()));
+        model.addAttribute("roles", roleService.findAllRole());
+        return "admin/list";
     }
 
-    @GetMapping("admin/new")
-    public String pageCreateUser(User user, Model model) {
-        model.addAttribute("listRoles",roleService.findAllRole());
-        return "create_user";
+    @GetMapping("/add")
+    public String getUserFormCreation(Principal principal, Model model) {
+        model.addAttribute("user", new User());
+        model.addAttribute("logUser", userServiceImp.findByEmail(principal.getName()));
+        model.addAttribute("roles", roleService.findAllRole());
+        return "admin/add";
     }
 
-    @PostMapping("admin/new")
-    public String pageCreate(@RequestParam("role")ArrayList<Long> roles,
-                             @ModelAttribute("user") @Valid User user,
-                             BindingResult bindingResult) {
-        if (bindingResult.hasErrors()) {
-            return "create_user";
-        }
-        if (userService.findByUsername(user.getUsername()) != null) {
-            bindingResult.addError(new FieldError("username", "username",
-                    String.format("User with name \"%s\" is already exist!", user.getUsername())));
-            return "create_user";
-        }
-        user.setRoles(roleService.findByIdRoles(roles));
-        userService.save(user);
+    @PostMapping()
+    public String createUser(@ModelAttribute("user") User user) {
+        userServiceImp.save(user);
         return "redirect:/admin";
     }
 
-    @DeleteMapping("admin/delete/{id}")
-    public String pageDelete(@PathVariable("id") long id) {
-        userService.deleteById(id);
+    @DeleteMapping("/{id}")
+    public String deleteUser(@PathVariable("id") Long id) {
+        userServiceImp.deleteById(id);
         return "redirect:/admin";
     }
 
-    @GetMapping("admin/edit/{id}")
-    public String pageEditUser(@PathVariable("id") long id, Model model) {
-        model.addAttribute("user",userService.getById(id));
-        model.addAttribute("listRoles",roleService.findAllRole());
-        return "edit";
-    }
-
-    @PatchMapping("admin/edit")
-    public String pageEdit(@ModelAttribute("user") User user) {
-        userService.save(user);
+    @PutMapping("/{id}")
+    public String updateUser(@ModelAttribute("user") User user, @PathVariable("id") Long id) {
+        userServiceImp.updateUser(id, user);
         return "redirect:/admin";
     }
 }

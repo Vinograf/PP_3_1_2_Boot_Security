@@ -2,27 +2,29 @@ package ru.kata.spring.boot_security.demo.model;
 
 import org.springframework.security.core.GrantedAuthority;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
-@Table(name = "role")
+@Table(name = "roles")
 public class Role implements GrantedAuthority {
+
     @Id
+    @Column(name = "role_id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String name;
 
+    public Role(long l, String role_user) {
+    }
+
+    public Role(String name) {
+        this.name = name;
+    }
+
     public Role() {
-    }
 
-    public Role(Long id) {
-        this.id = id;
-    }
-
-    public Role(Long id, String role) {
-        this.id = id;
-        this.name = role;
     }
 
     public Long getId() {
@@ -45,4 +47,28 @@ public class Role implements GrantedAuthority {
     public String getAuthority() {
         return getName();
     }
+
+    public String getStringRole() {
+        return name.substring(5);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Role roles = (Role) o;
+        return Objects.equals(name, roles.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
+    }
+
+    @Override
+    public String toString() {
+        return name;
+    }
+
+
 }

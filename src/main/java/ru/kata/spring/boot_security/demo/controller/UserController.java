@@ -5,33 +5,27 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import ru.kata.spring.boot_security.demo.service.UserService;
+import ru.kata.spring.boot_security.demo.service.UserServiceImp;
 
 import java.security.Principal;
 
 @Controller
+@RequestMapping("/user")
 public class UserController {
-    private UserService userService;
 
-    public UserController(UserService userService) {
-        this.userService = userService;
+    private final UserServiceImp userServiceImp;
+
+    public UserController(UserServiceImp userServiceImpl) {
+        this.userServiceImp = userServiceImpl;
     }
 
-    @GetMapping(value = "/user")
-    public String getUserPage(Model model, Principal principal) {
-        model.addAttribute("user",userService.findByUsername(principal.getName()));
-        return "oneUser";
+    @GetMapping()
+    public String getUser(Principal principal, Model model) {
+        model.addAttribute("logUser", userServiceImp.findByEmail(principal.getName()));
+        return "user/user";
     }
 
-    @RequestMapping(value={"/login"}, method = RequestMethod.GET)
-    public String loginPage() {
-        return "login";
-    }
 
-    @GetMapping(value={"/"})
-    public String indexPage() {
-        return "login";
-    }
 
 }
