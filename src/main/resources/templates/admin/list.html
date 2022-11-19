@@ -123,7 +123,7 @@
                                       size="2" required placeholder="Disabled input">
                                 <option th:each="role: ${roles}"
                                         th:value="${role.getId()}"
-                                        th:selected="${user.getRoles()}">
+                                        th:selected="${user.roles.contains(role)}">
                                   <th:block
                                           th:text="${role.getStringRole()}">
                                   </th:block>
