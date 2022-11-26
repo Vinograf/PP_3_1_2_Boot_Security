@@ -1,5 +1,6 @@
 package ru.kata.spring.boot_security.demo.model;
 
+import org.hibernate.Hibernate;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
@@ -10,33 +11,41 @@ import java.util.Objects;
 public class Role implements GrantedAuthority {
 
     @Id
-    @Column(name = "role_id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
+    @Column
+    private Integer id;
+    @Column
     private String name;
 
-    public Role(long l, String role_user) {
-    }
+    public Role() { }
 
     public Role(String name) {
         this.name = name;
     }
 
-    public Role() {
-
+    @Override
+    public String getAuthority() {
+        return name;
     }
 
-    public Long getId() {
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        Role role = (Role) o;
+        return id != null && Objects.equals(id, role.id);
+    }
+
+    public Integer getId() {
         return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getName() {
         return name;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 
     public void setName(String name) {
@@ -44,31 +53,15 @@ public class Role implements GrantedAuthority {
     }
 
     @Override
-    public String getAuthority() {
-        return getName();
-    }
-
-    public String getStringRole() {
-        return name.substring(5);
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Role roles = (Role) o;
-        return Objects.equals(name, roles.name);
-    }
-
-    @Override
     public int hashCode() {
-        return Objects.hash(name);
+        return getClass().hashCode();
     }
 
     @Override
     public String toString() {
-        return name;
+        return "Role{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
     }
-
-
 }

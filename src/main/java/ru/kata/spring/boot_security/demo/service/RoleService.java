@@ -1,16 +1,15 @@
 package ru.kata.spring.boot_security.demo.service;
 
-import org.springframework.transaction.annotation.Transactional;
 import ru.kata.spring.boot_security.demo.model.Role;
 
-import javax.annotation.PostConstruct;
-import java.util.List;
 import java.util.Set;
 
 public interface RoleService {
-    List<Role> findAllRole();
-//    void addDefaultRole();
-    Set<Role> findByIdRoles(List<Long>roles);
+    Set<Role> findAll();
 
+    Role findByName(String name);
 
+    void save(Role role);
+
+    Role findById(Integer id);
 }
