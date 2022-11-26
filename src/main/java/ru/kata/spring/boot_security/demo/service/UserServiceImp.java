@@ -28,7 +28,8 @@ public class UserServiceImp implements UserDetailsService, UserService {
     public User findById(Integer id) {
         return userRepository.findById(id).orElse(null);
     }
-
+    @Transactional
+    @Override
     public List<User> findAll() {
         return userRepository.findAll();
     }

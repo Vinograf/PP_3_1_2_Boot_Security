@@ -12,7 +12,6 @@ import java.util.Set;
 
 
 @Service
-
 public class RoleServiceImp implements RoleService{
     private final RoleRepository roleRepository;
 
