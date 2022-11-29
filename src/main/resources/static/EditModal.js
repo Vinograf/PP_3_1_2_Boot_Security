@@ -11,7 +11,7 @@ async function showEditModal(id) {
     form.name.value = user.name;
     form.surname.value = user.surname;
     form.username.value = user.username;
-    form.password.value = null;
+    form.password.value = user.password;
 
 
     await fetch("http://localhost:8080/api/roles")
